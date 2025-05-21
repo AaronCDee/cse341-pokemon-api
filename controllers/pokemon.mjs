@@ -1,6 +1,7 @@
 import { ObjectId } from 'mongodb';
 
-import db from "../db/conn.mjs";
+import db      from "../db/conn.mjs";
+import isEmpty from '../utils/isEmpty.mjs';
 
 const collection = () => db.collection("pokemon");
 
@@ -23,15 +24,24 @@ export async function show(req, res) {
   }
 }
 
-/**
- *
- * @param {*} req
- * @param {*} res
- *
- * @returns {string} the new pokemon id
- */
 export async function create(req, res) {
-  /* #swagger.description = 'Endpoint to create a pokemon.' */
+  /*
+    #swagger.description = 'Register a new Pokemon to the Pokedex'
+    #swagger.parameters['body'] = {
+      in: 'body',
+      required: true,
+      description: 'Pokemon data',
+      schema: {
+        $name: 'Pikachu',
+        $type: 'Electric',
+        $weakness: 'Ground',
+        $caughtAt: '2025-05-21T10:00:00.000Z'
+      }
+    }
+  */
+  const { name, type, weakness, caughtAt } = req.body;
+  const createAttrs = { name, type, weakness, caughtAt };
+
   try {
     const result = await collection().insertOne(createAttrs);
 
@@ -42,7 +52,26 @@ export async function create(req, res) {
 }
 
 export async function update(req, res) {
-  /* #swagger.description = 'Endpoint to update a pokemon.' */
+  /*
+    #swagger.description = 'Update a Pokemon in the Pokedex'
+    #swagger.parameters['body'] = {
+      in: 'body',
+      description: 'Pokemon data',
+      schema: {
+        $name: 'Pikachu',
+        $type: 'Electric',
+        $weakness: 'Ground',
+        $caughtAt: '2025-05-21T10:00:00.000Z'
+      }
+    }
+    #swagger.parameters['id'] = {
+      in: 'path',
+      description: 'ID of the Pokemon',
+      required: true,
+      type: 'string',
+      example: '60c72b2f5f1b2c001f5a1e9d'
+    }
+  */
   const filter = { _id: new ObjectId(req.params.id) };
 
   const { name, type, weakness, caughtAt } = req.body;

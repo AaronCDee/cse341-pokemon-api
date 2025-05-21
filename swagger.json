@@ -21,7 +21,42 @@
         }
       },
       "post": {
-        "description": "Endpoint to create a pokemon.",
+        "description": "Register a new Pokemon to the Pokedex",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Pokemon data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Pikachu"
+                },
+                "type": {
+                  "type": "string",
+                  "example": "Electric"
+                },
+                "weakness": {
+                  "type": "string",
+                  "example": "Ground"
+                },
+                "caughtAt": {
+                  "type": "string",
+                  "example": "2025-05-21T10:00:00.000Z"
+                }
+              },
+              "required": [
+                "name",
+                "type",
+                "weakness",
+                "caughtAt"
+              ]
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -53,33 +88,46 @@
         }
       },
       "put": {
-        "description": "Endpoint to update a pokemon.",
+        "description": "Update a Pokemon in the Pokedex",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "ID of the Pokemon",
+            "example": "60c72b2f5f1b2c001f5a1e9d"
           },
           {
             "name": "body",
             "in": "body",
+            "description": "Pokemon data",
             "schema": {
               "type": "object",
               "properties": {
                 "name": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Pikachu"
                 },
                 "type": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Electric"
                 },
                 "weakness": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "Ground"
                 },
                 "caughtAt": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "2025-05-21T10:00:00.000Z"
                 }
-              }
+              },
+              "required": [
+                "name",
+                "type",
+                "weakness",
+                "caughtAt"
+              ]
             }
           }
         ],
