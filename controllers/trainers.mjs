@@ -11,7 +11,11 @@ export async function index(_req, res) {
   */
   let results = await collection().find({}).toArray();
 
-  res.status(200).send(results);
+  try {
+    res.status(200).send(results);
+  } catch (e) {
+    res.status(500).send({ errors: e });
+  }
 }
 
 export async function show(req, res) {
@@ -22,10 +26,14 @@ export async function show(req, res) {
   const query  = {_id: new ObjectId(req.params.id)};
   const result = await collection().findOne(query);
 
-  if (!result) {
-    res.status(404).send({ errors: "Not found" });
-  } else {
-    res.status(200).send(result);
+  try{
+    if (!result) {
+      res.status(404).send({ errors: "Not found" });
+    } else {
+      res.status(200).send(result);
+    }
+  } catch (e) {
+    res.status(500).send({ errors: e });
   }
 }
 
