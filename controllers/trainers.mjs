@@ -2,12 +2,12 @@ import { ObjectId } from 'mongodb';
 
 import db from "../db/conn.mjs";
 
-const collection = () => db.collection("pokemon");
+const collection = () => db.collection("trainers");
 
 export async function index(_req, res) {
   /*
-    #swagger.description = 'Endpoint to list all pokemon.'
-    #swagger.tags = ['Pokemon']
+    #swagger.description = 'Endpoint to list all trainers.'
+    #swagger.tags = ['Trainers']
   */
   let results = await collection().find({}).toArray();
 
@@ -16,8 +16,8 @@ export async function index(_req, res) {
 
 export async function show(req, res) {
   /*
-    #swagger.description = 'Endpoint to fetch a pokemon by ID.'
-    #swagger.tags = ['Pokemon']
+    #swagger.description = 'Endpoint to fetch a trainer by ID.'
+    #swagger.tags = ['Trainers']
   */
   const query  = {_id: new ObjectId(req.params.id)};
   const result = await collection().findOne(query);
@@ -31,22 +31,23 @@ export async function show(req, res) {
 
 export async function create(req, res) {
   /*
-    #swagger.description = 'Register a new Pokemon to the Pokedex'
-    #swagger.tags = ['Pokemon']
+    #swagger.description = 'Register a new trainer'
+    #swagger.tags = ['Trainers']
     #swagger.parameters['body'] = {
       in: 'body',
       required: true,
-      description: 'Pokemon data',
+      description: 'Trainer data',
       schema: {
-        $name: 'Pikachu',
-        $type: 'Electric',
-        $weakness: 'Ground',
-        $caughtAt: '2025-05-21T10:00:00.000Z'
+        $firstName: 'Ashe',
+        $lastName: 'Ketchum',
+        $age: 10,
+        $region: 'Kanto',
+        $gender: 'male'
       }
     }
   */
-  const { name, type, weakness, caughtAt } = req.body;
-  const createAttrs = { name, type, weakness, caughtAt };
+  const { firstName, lastName, age, gender, region } = req.body;
+  const createAttrs = { firstName, lastName, age, gender, region };
 
   try {
     const result = await collection().insertOne(createAttrs);
@@ -59,21 +60,22 @@ export async function create(req, res) {
 
 export async function update(req, res) {
   /*
-    #swagger.description = 'Update a Pokemon in the Pokedex'
-    #swagger.tags = ['Pokemon']
+    #swagger.description = 'Update a trainer'
+    #swagger.tags = ['Trainers']
     #swagger.parameters['body'] = {
       in: 'body',
-      description: 'Pokemon data',
+      description: 'Trainer data',
       schema: {
-        $name: 'Pikachu',
-        $type: 'Electric',
-        $weakness: 'Ground',
-        $caughtAt: '2025-05-21T10:00:00.000Z'
+        $firstName: 'Ashe',
+        $lastName: 'Ketchum',
+        $age: 10,
+        $region: 'Kanto',
+        $gender: 'male'
       }
     }
     #swagger.parameters['id'] = {
       in: 'path',
-      description: 'ID of the Pokemon',
+      description: 'ID of the trainer',
       required: true,
       type: 'string',
       example: '60c72b2f5f1b2c001f5a1e9d'
@@ -81,8 +83,8 @@ export async function update(req, res) {
   */
   const filter = { _id: new ObjectId(req.params.id) };
 
-  const { name, type, weakness, caughtAt } = req.body;
-  const updateAttrs = { name, type, weakness, caughtAt };
+  const { firstName, lastName, age, gender, region } = req.body;
+  const updateAttrs = { firstName, lastName, age, gender, region };
 
   try {
     const result = await collection().updateOne(filter, { $set: updateAttrs });
@@ -95,8 +97,8 @@ export async function update(req, res) {
 
 export async function destroy(req, res) {
   /*
-    #swagger.description = 'Endpoint to delete a pokemon.'
-    #swagger.tags = ['Pokemon']
+    #swagger.description = 'Endpoint to delete a trainer.'
+    #swagger.tags = ['Trainers']
   */
   const filter = { _id: new ObjectId(req.params.id) };
 

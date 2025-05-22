@@ -6,13 +6,26 @@
     "version": "1.0.0"
   },
   "host": "aaroncdee-cse341-pokemon-api.onrender.com",
-  "basePath": "/pokemon",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Pokemon",
+      "description": "Pokemon-related endpoints"
+    },
+    {
+      "name": "Trainers",
+      "description": "Trainer-related endpoints"
+    }
+  ],
   "schemes": [
     "https"
   ],
   "paths": {
-    "/": {
+    "/pokemon/": {
       "get": {
+        "tags": [
+          "Pokemon"
+        ],
         "description": "Endpoint to list all pokemon.",
         "responses": {
           "200": {
@@ -21,6 +34,9 @@
         }
       },
       "post": {
+        "tags": [
+          "Pokemon"
+        ],
         "description": "Register a new Pokemon to the Pokedex",
         "parameters": [
           {
@@ -67,8 +83,11 @@
         }
       }
     },
-    "/{id}": {
+    "/pokemon/{id}": {
       "get": {
+        "tags": [
+          "Pokemon"
+        ],
         "description": "Endpoint to fetch a pokemon by ID.",
         "parameters": [
           {
@@ -88,6 +107,9 @@
         }
       },
       "put": {
+        "tags": [
+          "Pokemon"
+        ],
         "description": "Update a Pokemon in the Pokedex",
         "parameters": [
           {
@@ -137,10 +159,16 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
           }
         }
       },
       "delete": {
+        "tags": [
+          "Pokemon"
+        ],
         "description": "Endpoint to delete a pokemon.",
         "parameters": [
           {
@@ -156,6 +184,193 @@
           },
           "400": {
             "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/trainers/": {
+      "get": {
+        "tags": [
+          "Trainers"
+        ],
+        "description": "Endpoint to list all trainers.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Trainers"
+        ],
+        "description": "Register a new trainer",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Trainer data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string",
+                  "example": "Ashe"
+                },
+                "lastName": {
+                  "type": "string",
+                  "example": "Ketchum"
+                },
+                "age": {
+                  "type": "number",
+                  "example": 10
+                },
+                "region": {
+                  "type": "string",
+                  "example": "Kanto"
+                },
+                "gender": {
+                  "type": "string",
+                  "example": "male"
+                }
+              },
+              "required": [
+                "firstName",
+                "lastName",
+                "age",
+                "region",
+                "gender"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
+    "/trainers/{id}": {
+      "get": {
+        "tags": [
+          "Trainers"
+        ],
+        "description": "Endpoint to fetch a trainer by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Trainers"
+        ],
+        "description": "Update a trainer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the trainer",
+            "example": "60c72b2f5f1b2c001f5a1e9d"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Trainer data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string",
+                  "example": "Ashe"
+                },
+                "lastName": {
+                  "type": "string",
+                  "example": "Ketchum"
+                },
+                "age": {
+                  "type": "number",
+                  "example": 10
+                },
+                "region": {
+                  "type": "string",
+                  "example": "Kanto"
+                },
+                "gender": {
+                  "type": "string",
+                  "example": "male"
+                }
+              },
+              "required": [
+                "firstName",
+                "lastName",
+                "age",
+                "region",
+                "gender"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Trainers"
+        ],
+        "description": "Endpoint to delete a trainer.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }

@@ -3,9 +3,8 @@ import cors    from 'cors';
 
 import './loadEnv.mjs';
 
-import homeRoutes     from './routes/home.mjs';
-import pokemonRoutes from './routes/pokemon.mjs';
-import swaggerRoutes  from './routes/swagger.js';
+import routes        from './routes/index.mjs'
+import swaggerRoutes from './routes/swagger.js';
 
 // Web server
 const PORT = process.env.PORT || 8080;
@@ -16,9 +15,7 @@ app.use(express.json());
 
 // BaseRoutes
 app.use('/api-docs', swaggerRoutes);
-app.use('/pokemon', pokemonRoutes);
-app.use('/', homeRoutes);
-
+app.use('/', routes);
 
 // Global error handling
 app.use((err, _req, res, _next) => {
