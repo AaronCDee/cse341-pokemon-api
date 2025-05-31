@@ -8,6 +8,5 @@ const router = express.Router();
 
 router.use('/pokemon', pokemonRoutes);
 router.use('/trainers', trainerRoutes);
-router.use('/', homeRoutes);
 
 export default router;
