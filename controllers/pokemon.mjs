@@ -49,12 +49,15 @@ export async function create(req, res) {
         $name: 'Pikachu',
         $type: 'Electric',
         $weakness: 'Ground',
-        $caughtAt: '2025-05-21T10:00:00.000Z'
+        $caughtAt: '2025-05-21T10:00:00.000Z',
+        $trainer: 'Ash',
+        $level: 32,
+        $abilities: ["Thunderbolt", "Quick Attack", "Iron Tail"]
       }
     }
   */
-  const { name, type, weakness, caughtAt } = req.body;
-  const createAttrs = { name, type, weakness, caughtAt };
+  const { name, type, weakness, caughtAt, abilities, trainer, level } = req.body;
+  const createAttrs = { name, type, weakness, caughtAt, abilities, trainer, level };
 
   try {
     const result = await collection().insertOne(createAttrs);
@@ -76,7 +79,10 @@ export async function update(req, res) {
         $name: 'Pikachu',
         $type: 'Electric',
         $weakness: 'Ground',
-        $caughtAt: '2025-05-21T10:00:00.000Z'
+        $caughtAt: '2025-05-21T10:00:00.000Z',
+        $trainer: 'Ash',
+        $level: 32,
+        $abilities: ["Thunderbolt", "Quick Attack", "Iron Tail"]
       }
     }
     #swagger.parameters['id'] = {
@@ -89,8 +95,8 @@ export async function update(req, res) {
   */
   const filter = { _id: new ObjectId(req.params.id) };
 
-  const { name, type, weakness, caughtAt } = req.body;
-  const updateAttrs = { name, type, weakness, caughtAt };
+  const { name, type, weakness, caughtAt, abilities, trainer, level } = req.body;
+  const updateAttrs = { name, type, weakness, caughtAt, abilities, trainer, level };
 
   try {
     const result = await collection().updateOne(filter, { $set: updateAttrs });
