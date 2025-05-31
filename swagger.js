@@ -6,8 +6,6 @@ const doc = {
     description: 'Manage pokemon database'
   },
   basePath: "/",
-  host: "aaroncdee-cse341-pokemon-api.onrender.com",
-  schemes: ["https"],
   tags: [
     {
       name: 'Pokemon',
