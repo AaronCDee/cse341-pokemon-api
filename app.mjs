@@ -13,6 +13,8 @@ import swaggerRoutes from './routes/swagger.js';
 const PORT = process.env.PORT || 8080;
 const app  = express();
 
+app.set('trust proxy', true); // NOTE: for Swagger dynamic proto
+
 app.use(session({
   secret:            "secret",
   resave:            false,
